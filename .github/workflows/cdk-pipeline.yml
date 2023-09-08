@@ -43,36 +43,36 @@ jobs:
         if: success()
 
   promote-to-prod:
-  needs: build
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Install AWS CLI
-      run: |
-        curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
-    - name: Configure AWS credentials
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-        aws configure set default.region us-east-1  # Change to your region
+      - name: Install AWS CLI
+        run: |
+          curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          
+      - name: Configure AWS credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
+          aws configure set default.region us-east-1  # Change to your region
 
-    - name: Synth CDK app to Prod
-      run: cdk synth
-      if: success()
+      - name: Synth CDK app to Prod
+        run: cdk synth
+        if: success()
 
-    - name: Diff CDK app to Prod
-      run: cdk diff
-      if: success()
-        
-    - name: Manually promote to Prod
-      run: |
-        echo "Manually promote to Prod"
-        cd path/to/your/cdk/app
-        cdk deploy
-    if: github.event_name == 'repository_dispatch'
+      - name: Diff CDK app to Prod
+        run: cdk diff
+        if: success()
+          
+      - name: Manually promote to Prod
+        run: |
+          echo "Manually promote to Prod"
+          cd path/to/your/cdk/app
+          cdk deploy
+      if: github.event_name == 'repository_dispatch'
