@@ -75,4 +75,4 @@ jobs:
           echo "Manually promote to Prod"
           cd path/to/your/cdk/app
           cdk deploy
-      if: github.event_name == 'repository_dispatch'
+        if: github.event_name == 'repository_dispatch'
