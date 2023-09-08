@@ -1,4 +1,4 @@
-name: CDK Pipeline
+name: CDK Pipeline Test
 
 on:
   pull_request:
