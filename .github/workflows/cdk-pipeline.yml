@@ -82,24 +82,10 @@ jobs:
       - name: Diff CDK app to Prod
         run: cdk diff
         if: success()
-
-      - uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: vcarneiro-caylent
-          minimun-approvals: 1
-          ssue-title: "Deploying to production"
-          issue-body: "Please approve or deny the deployment to production"
       
       - name: Deploy CDK app to Prod
+        environment: prod
         run: |
-          if [ "$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.manual-approval.outputs.issue-number }}/comments \
-              | jq -r '.[].user.login')" == "vcarneiro-caylent" ]; then
-            echo "Deployment to Prod approved. Proceeding with deployment..."
-            # Add your deployment commands here
-          else
-            echo "Deployment to Prod not approved. Skipping..."
-          fi
-        if: success() && steps.manual-approval.outputs.approved == true
+          cd ./
+          cdk deploy
+        if: success()
