@@ -6,50 +6,50 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
     
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "16"
 
-      - name: Install AWS CLI
-        run: |
-          if ! command -v aws &> /dev/null; then
-            curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-          fi
-          npm install -g aws-cdk
-        if: success()
+  #     - name: Install AWS CLI
+  #       run: |
+  #         if ! command -v aws &> /dev/null; then
+  #           curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  #           unzip awscliv2.zip
+  #           sudo ./aws/install
+  #         fi
+  #         npm install -g aws-cdk
+  #       if: success()
 
-      - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-          aws configure set default.region us-east-1  # Change to your region
-        if: success()
+  #     - name: Configure AWS credentials
+  #       run: |
+  #         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
+  #         aws configure set default.region us-east-1  # Change to your region
+  #       if: success()
 
-      - name: Synth CDK app to Dev
-        run: cdk synth
-        if: success()
+  #     - name: Synth CDK app to Dev
+  #       run: cdk synth
+  #       if: success()
 
-      - name: Diff CDK app to Dev
-        run: cdk diff
-        if: success()
+  #     - name: Diff CDK app to Dev
+  #       run: cdk diff
+  #       if: success()
 
-      - name: Deploy CDK app to Dev
-        run: |
-          cd ./
-          cdk deploy
-        if: success()
+  #     - name: Deploy CDK app to Dev
+  #       run: |
+  #         cd ./
+  #         cdk deploy
+  #       if: success()
 
   promote-to-prod:
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -100,7 +100,6 @@ jobs:
         run: |
           if [[ "${{ steps.manual-approval.outputs.approved }}" == "true" ]]; then
             echo "Deploying to Prod..."
-            cd path/to/your/cdk/app
             cdk deploy
           else
             echo "Deployment to Prod not approved. Skipping..."
