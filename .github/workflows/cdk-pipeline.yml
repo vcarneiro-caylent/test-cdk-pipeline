@@ -57,6 +57,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: trstringer,acdunnigan
         
       - name: Install Dependencies
         run: |
@@ -82,10 +86,21 @@ jobs:
       - name: Diff CDK app to Prod
         run: cdk diff
         if: success()
-          
-      - name: Manually promote to Prod
+
+      - name: Manual approval for Prod deployment
+        id: manual-approval
         run: |
-          echo "Manually promote to Prod"
-          cd path/to/your/cdk/app
-          cdk deploy
-        if: github.event_name == 'repository_dispatch'
+          echo "Approve the deployment to Prod"
+          echo "::set-output name=approved::true"  # This sets an output variable to indicate approval
+        if: github.event_name == 'workflow_dispatch'
+
+      - name: Deploy CDK app to Prod
+        run: |
+          if [[ "${{ steps.manual-approval.outputs.approved }}" == "true" ]]; then
+            echo "Deploying to Prod..."
+            cd path/to/your/cdk/app
+            cdk deploy
+          else
+            echo "Deployment to Prod not approved. Skipping..."
+          fi
+        if: success() && steps.manual-approval.outputs.approved == "true"
