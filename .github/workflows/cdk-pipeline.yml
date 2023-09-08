@@ -89,7 +89,7 @@ jobs:
           approvers: vcarneiro-caylent
           minimun-approvals: 1
           ssue-title: "Deploying to production"
-        issue-body: "Please approve or deny the deployment to production"
+          issue-body: "Please approve or deny the deployment to production"
       
       - name: Deploy CDK app to Prod
         run: |
