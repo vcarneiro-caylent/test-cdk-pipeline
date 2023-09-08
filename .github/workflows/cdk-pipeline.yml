@@ -117,7 +117,7 @@ jobs:
     needs: build-prod && approval-check
     runs-on: ubuntu-latest
     environment: prod
-    if: ${{ github.event_name == 'pull_request' && steps.approval.outputs.approval == 'true' }}
+    if: ${{ github.event_name == 'pull_request' && github.event.review.state == 'approved' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
