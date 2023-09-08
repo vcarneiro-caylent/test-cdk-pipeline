@@ -57,11 +57,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
-      - uses: trstringer/manual-approval@v1
-        with:
-          minimum-approvals: 1
-          approvers: vinicius-carneiro
-          issue-body: "Please approve or deny the deployment of version v1.3.5."
         
       - name: Install Dependencies
         run: |
@@ -88,18 +83,22 @@ jobs:
         run: cdk diff
         if: success()
 
-      - name: Manual approval for Prod deployment
-        id: manual-approval
-        run: |
-          echo "Approve the deployment to Prod"
-          echo "::set-output name=approved::true"  # This sets an output variable to indicate approval
-        if: github.event_name == 'workflow_dispatch'
-
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret:${{ github.TOKEN }}
+          approvers: vcarneiro-caylent
+          minimun-approvals: 1
+          ssue-title: "Deploying to production"
+        issue-body: "Please approve or deny the deployment to production"
+      
       - name: Deploy CDK app to Prod
         run: |
-          if [[ "${{ steps.manual-approval.outputs.approved }}" == "true" ]]; then
-            echo "Deploying to Prod..."
-            cdk deploy
+          if [ "$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.manual-approval.outputs.issue-number }}/comments \
+              | jq -r '.[].user.login')" == "vcarneiro-caylent" ]; then
+            echo "Deployment to Prod approved. Proceeding with deployment..."
+            # Add your deployment commands here
           else
             echo "Deployment to Prod not approved. Skipping..."
           fi
