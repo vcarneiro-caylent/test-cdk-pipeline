@@ -32,11 +32,11 @@ jobs:
           aws configure set default.region us-east-1  # Change to your region
         if: success()
 
-      - name: Synth CDK app to Dev
+      - name: cdk synth
         run: cdk synth
         if: success()
 
-      - name: Diff CDK app to Dev
+      - name: cdk diff
         run: cdk diff
         if: success()
 
@@ -67,7 +67,7 @@ jobs:
           aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
           aws configure set default.region us-east-1  # Change to your region
       
-      - name: Deploy CDK app to Dev
+      - name: cdk deploy
         run: |
           cdk deploy
         if: success()
@@ -97,11 +97,11 @@ jobs:
           aws configure set default.region us-east-1  # Change to your region
         if: success()
 
-      - name: Synth CDK app to Prod
+      - name: cdk synth
         run: cdk synth
         if: success()
 
-      - name: Diff CDK app to Prod
+      - name: cdk diff
         run: cdk diff
         if: success()
 
@@ -133,15 +133,15 @@ jobs:
           aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
           aws configure set default.region us-east-1  # Change to your region
 
-      - name: Synth CDK app to Prod
+      - name: cdk synth
         run: cdk synth
         if: success()
 
-      - name: Diff CDK app to Prod
+      - name: cdk diff
         run: cdk diff
         if: success()
       
-      - name: Deploy CDK app to Prod
+      - name: cdk deploy
         run: |
           cd ./
           cdk deploy
