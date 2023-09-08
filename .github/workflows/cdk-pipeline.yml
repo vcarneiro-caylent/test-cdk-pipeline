@@ -85,7 +85,7 @@ jobs:
 
       - uses: trstringer/manual-approval@v1
         with:
-          secret:${{ github.TOKEN }}
+          secret: ${{ github.TOKEN }}
           approvers: vcarneiro-caylent
           minimun-approvals: 1
           ssue-title: "Deploying to production"
