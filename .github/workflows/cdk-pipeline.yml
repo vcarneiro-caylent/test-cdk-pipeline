@@ -60,8 +60,9 @@ jobs:
       - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
+          minimum-approvals: 1
           approvers: vinicius-carneiro
-          node-version: "16"
+          issue-body: "Please approve or deny the deployment of version v1.3.5."
         
       - name: Install Dependencies
         run: |
