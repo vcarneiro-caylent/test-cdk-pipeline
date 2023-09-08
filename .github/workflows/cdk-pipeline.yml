@@ -63,12 +63,12 @@ jobs:
         aws configure set default.region us-east-1  # Change to your region
 
     - name: Synth CDK app to Prod
-        run: cdk synth
-        if: success()
+      run: cdk synth
+      if: success()
 
     - name: Diff CDK app to Prod
-        run: cdk diff
-        if: success()
+      run: cdk diff
+      if: success()
         
     - name: Manually promote to Prod
       run: |
