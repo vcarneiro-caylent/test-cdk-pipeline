@@ -4,14 +4,19 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - "*"
+      - "*/*"
+      - "!main"
 
 jobs:
-  approval-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check PR Approval
-        id: approval
-        run: ech
+  # approval-check:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check PR Approval
+  #       id: approval
+  #       run: ech
 
   build-dev:
     runs-on: ubuntu-latest
@@ -48,7 +53,7 @@ jobs:
         if: success()
 
   deploy-to-dev:
-    needs: [build-dev, approval-check]
+    needs: build-dev
     runs-on: ubuntu-latest
     environment: dev
     if: ${{ github.event_name == 'pull_request' && github.event.review.state == 'approved' }}
@@ -114,7 +119,7 @@ jobs:
         if: success()
 
   deploy-to-prod:
-    needs: [build-prod, approval-check]
+    needs: build-prod
     runs-on: ubuntu-latest
     environment: prod
     if: ${{ github.event_name == 'pull_request' && github.event.review.state == 'approved' }}
