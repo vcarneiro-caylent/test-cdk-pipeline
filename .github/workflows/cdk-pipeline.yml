@@ -103,4 +103,4 @@ jobs:
           else
             echo "Deployment to Prod not approved. Skipping..."
           fi
-        if: success() && steps.manual-approval.outputs.approved == "true"
+        if: success() && steps.manual-approval.outputs.approved == true
