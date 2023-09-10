@@ -54,7 +54,7 @@ jobs:
     needs: build-dev
     runs-on: ubuntu-latest
     environment: dev
-    if: ${{ github.event.pull_request.merged == true && github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -120,7 +120,7 @@ jobs:
     needs: build-prod
     runs-on: ubuntu-latest
     environment: prod
-    if: ${{ github.event.pull_request.merged == true && github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
