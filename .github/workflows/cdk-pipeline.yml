@@ -1,8 +1,8 @@
 name: CDK Pipeline
 
 on:
-  pull_request:
-    merged: true
+  pull_request_review:
+    types: [submitted]
     branches:
       - main
   # push:
