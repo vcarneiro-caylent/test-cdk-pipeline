@@ -3,13 +3,13 @@ name: CDK Pipeline Test
 on:
   pull_request_review:
     types: [submitted]
-    paths:
-      - 'cdk/**'
+    # paths:
+    #   - 'cdk/**'
     branches:
       - main
   push:
-    paths:
-      - 'cdk/**'
+    # paths:
+    #   - 'cdk/**'
     branches:
       - "*"
       - "*/*"
