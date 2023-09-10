@@ -1,19 +1,21 @@
 name: CDK Pipeline
 
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types: 
+      - opened
+      - closed
     # paths:
     #   - 'cdk/**'
     branches:
       - main
-  push:
-    # paths:
-    #   - 'cdk/**'
-    branches:
-      - "*"
-      - "*/*"
-      - "!main"
+  # push:
+  #   # paths:
+  #   #   - 'cdk/**'
+  #   branches:
+  #     - "*"
+  #     - "*/*"
+  #     - "!main"
 
 jobs:
   build-dev:
@@ -54,7 +56,7 @@ jobs:
     needs: build-dev
     runs-on: ubuntu-latest
     environment: dev
-    if: ${{ github.event.review.state == 'approved' }}
+    if: ${{ github.event.pull_request.merged == true && github.event.review.state == 'approved' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -120,7 +122,7 @@ jobs:
     needs: build-prod
     runs-on: ubuntu-latest
     environment: prod
-    if: ${{ github.event.review.state == 'approved' }}
+    if: ${{ github.event.pull_request.merged == true && github.event.review.state == 'approved' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
