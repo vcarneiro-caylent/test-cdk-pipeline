@@ -1,32 +1,30 @@
 name: CDK Pipeline Test
 
 on:
-  pull_request:
+  pull_request_review:
+    types: [submitted]
+    # paths:
+    #   - 'cdk/**'
     branches:
       - main
   push:
+    # paths:
+    #   - 'cdk/**'
     branches:
       - "*"
       - "*/*"
       - "!main"
 
 jobs:
-  # approval-check:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check PR Approval
-  #       id: approval
-  #       run: ech
-
   build-dev:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'latest'
 
       - name: Install Dependencies
         run: |
@@ -60,9 +58,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'latest'
         
       - name: Install Dependencies
         run: |
@@ -90,9 +88,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'latest'
 
       - name: Install Dependencies
         run: |
@@ -126,9 +124,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 'latest'
         
       - name: Install Dependencies
         run: |
