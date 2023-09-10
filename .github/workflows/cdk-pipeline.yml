@@ -2,7 +2,6 @@ name: CDK Pipeline
 
 on:
   pull_request_review:
-    types: [submitted]
     branches:
       - main
   # push:
