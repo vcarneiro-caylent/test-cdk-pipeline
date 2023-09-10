@@ -3,19 +3,18 @@ name: CDK Pipeline
 on:
   pull_request:
     types: 
-      - opened
       - closed
     # paths:
     #   - 'cdk/**'
     branches:
       - main
-  # push:
-  #   # paths:
-  #   #   - 'cdk/**'
-  #   branches:
-  #     - "*"
-  #     - "*/*"
-  #     - "!main"
+  push:
+    # paths:
+    #   - 'cdk/**'
+    branches:
+      - "*"
+      - "*/*"
+      - "!main"
 
 jobs:
   build-dev:
