@@ -7,14 +7,12 @@ on:
     # paths:
     #   - 'cdk/**'
     branches:
-      - "main"
+      - 'main'
   push:
     # paths:
     #   - 'cdk/**'
     branches:
-      - "*"
-      - "*/*"
-
+      - 'main'
 jobs:
   build-dev:
     runs-on: ubuntu-latest
