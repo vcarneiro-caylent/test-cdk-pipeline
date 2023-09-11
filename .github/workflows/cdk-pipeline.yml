@@ -115,7 +115,7 @@ jobs:
         if: success()
 
   deploy-to-prod:
-    needs: build-prod
+    needs: [ build-prod, deploy-to-dev ]
     runs-on: ubuntu-latest
     environment: prod
     if: ${{ github.ref == 'refs/heads/main' }}
