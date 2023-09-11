@@ -82,7 +82,6 @@ jobs:
         if: success()
 
   build-prod:
-    needs: deploy-to-dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
