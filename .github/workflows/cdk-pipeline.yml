@@ -26,9 +26,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
           npm install -g aws-cdk
         if: success()
 
@@ -62,11 +59,6 @@ jobs:
         
       - name: Install Dependencies
         run: |
-          if ! command -v aws &> /dev/null; then
-            curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-          fi
           npm install -g aws-cdk
 
       - name: Configure AWS credentials
@@ -92,9 +84,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
           npm install -g aws-cdk
         if: success()
 
@@ -128,11 +117,6 @@ jobs:
         
       - name: Install Dependencies
         run: |
-          if ! command -v aws &> /dev/null; then
-            curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-          fi
           npm install -g aws-cdk
 
           
