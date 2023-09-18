@@ -42,7 +42,9 @@ jobs:
         if: success()
 
       - name: cdk diff
-        run: cdk diff
+        run: |
+          mvn clean install -X
+          cdk diff
         if: success()
 
   deploy-to-dev:
@@ -96,7 +98,9 @@ jobs:
         if: success()
 
       - name: cdk diff
-        run: cdk diff
+        run: |
+          mvn clean install -X
+          cdk diff
         if: success()
 
   deploy-to-prod:
@@ -122,17 +126,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_CDK_ROLE }}
           aws-region: us-east-1
         if: success()
-
-      - name: cdk synth
-        run: cdk synth
-        if: success()
-
-      - name: cdk diff
-        run: cdk diff
-        if: success()
       
       - name: cdk deploy
         run: |
+          mvn clean install -X
           cd ./
           cdk deploy
         if: success()
