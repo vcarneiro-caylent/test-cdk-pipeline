@@ -1,4 +1,4 @@
-name: CDK Pipeline test
+name: CDK Pipeline
 
 on:
   pull_request:
@@ -30,15 +30,10 @@ jobs:
         if: success()
 
       - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-          aws configure set default.region us-east-1  # Change to your region
-        if: success()
-
-      - name: cdk synth
-        run: cdk synth
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CDK_ROLE }}
+          aws-region: us-east-1
         if: success()
 
       - name: cdk diff
@@ -62,11 +57,11 @@ jobs:
           npm install -g aws-cdk
 
       - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-          aws configure set default.region us-east-1  # Change to your region
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CDK_ROLE }}
+          aws-region: us-east-1
+        if: success()
       
       - name: cdk deploy
         run: |
@@ -88,15 +83,10 @@ jobs:
         if: success()
 
       - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-          aws configure set default.region us-east-1  # Change to your region
-        if: success()
-
-      - name: cdk synth
-        run: cdk synth
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CDK_ROLE }}
+          aws-region: us-east-1
         if: success()
 
       - name: cdk diff
@@ -121,11 +111,11 @@ jobs:
 
           
       - name: Configure AWS credentials
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-          aws configure set default.region us-east-1  # Change to your region
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_CDK_ROLE }}
+          aws-region: us-east-1
+        if: success()
 
       - name: cdk synth
         run: cdk synth
