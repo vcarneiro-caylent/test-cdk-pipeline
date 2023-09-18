@@ -43,7 +43,7 @@ jobs:
 
       - name: cdk diff
         run: |
-          mvn clean install -X
+          # mvn clean install -X
           cdk diff
         if: success()
 
@@ -72,7 +72,7 @@ jobs:
       
       - name: cdk deploy
         run: |
-          mvn clean install -X
+          # mvn clean install -X
           cdk deploy
         if: success()
 
@@ -99,7 +99,7 @@ jobs:
 
       - name: cdk diff
         run: |
-          mvn clean install -X
+          # mvn clean install -X
           cdk diff
         if: success()
 
@@ -129,7 +129,7 @@ jobs:
       
       - name: cdk deploy
         run: |
-          mvn clean install -X
+          # mvn clean install -X
           cd ./
           cdk deploy
         if: success()
